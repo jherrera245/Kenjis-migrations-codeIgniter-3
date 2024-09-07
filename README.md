@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $config['migration_enabled'] = TRUE;  // Habilitar migraciones
 $config['migration_type'] = 'timestamp';  // Puede ser 'sequential' o 'timestamp'
 $config['migration_table'] = 'migrations';  // Tabla donde se almacenan las migraciones
-$config['migration_auto_latest'] = FALSE;  // Automáticamente actualizar a la última versión
+$config['migration_auto_latest'] = FALSE;  // Automáticamente actualizar a la última versión cambiar a TRUE
 $config['migration_version'] = 0;  // Número de la versión de migración (0 para resetear)
 $config['migration_path'] = APPPATH . 'migrations/';  // Ruta de la carpeta de migraciones
 ```
