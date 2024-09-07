@@ -302,3 +302,132 @@ class Migration_AddColumnsToTable extends CI_Migration {
     }
 }
 ```
+
+11) Ejemplo de tablas relacionales
+```sh
+<?php
+
+class Migration_CreatePostsTable extends CI_Migration {
+
+    public function up()
+    {
+        $this->dbforge->add_field(array(
+            'id' => array(
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => TRUE,
+                'auto_increment' => TRUE
+            ),
+            'user_id' => array(
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => TRUE,
+            ),
+            'title' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+            ),
+            'body' => array(
+                'type' => 'TEXT',
+                'null' => TRUE,
+            ),
+            'created_at' => array(
+                'type' => 'DATETIME',
+                'null' => TRUE,
+            ),
+            'updated_at' => array(
+                'type' => 'DATETIME',
+                'null' => TRUE,
+            ),
+        ));
+        
+        // Clave primaria
+        $this->dbforge->add_key('id', TRUE);
+        
+        // Agregar la clave foránea
+        $this->dbforge->add_field('CONSTRAINT FOREIGN KEY (user_id) REFERENCES users(id)');
+        
+        // Crear la tabla
+        $this->dbforge->create_table('posts');
+    }
+
+    public function down()
+    {
+        $this->dbforge->drop_table('posts');
+    }
+}
+```
+
+13) Ejemplo usando otros tipos de datos
+```sh
+<?php
+
+class Migration_CreateExampleTable extends CI_Migration {
+
+    public function up()
+    {
+        $this->dbforge->add_field(array(
+            // Entero
+            'id' => array(
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => TRUE,
+                'auto_increment' => TRUE
+            ),
+            // Cadena de longitud variable
+            'name' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+            ),
+            // Texto largo
+            'description' => array(
+                'type' => 'TEXT',
+                'null' => TRUE,
+            ),
+            // Fecha
+            'created_date' => array(
+                'type' => 'DATE',
+            ),
+            // Fecha y hora
+            'created_at' => array(
+                'type' => 'DATETIME',
+                'null' => TRUE,
+            ),
+            // Booleano
+            'is_active' => array(
+                'type' => 'BOOLEAN',
+                'default' => TRUE,
+            ),
+            // Decimal
+            'price' => array(
+                'type' => 'DECIMAL',
+                'constraint' => '10,2', // 10 dígitos totales, 2 después del punto decimal
+                'default' => '0.00',
+            ),
+            // Enumeración
+            'status' => array(
+                'type' => 'ENUM',
+                'constraint' => ['pending', 'completed', 'failed'],
+                'default' => 'pending',
+            ),
+            // Binario grande
+            'file_data' => array(
+                'type' => 'BLOB',
+                'null' => TRUE,
+            ),
+        ));
+        
+        // Definir clave primaria
+        $this->dbforge->add_key('id', TRUE);
+
+        // Crear la tabla
+        $this->dbforge->create_table('example_table');
+    }
+
+    public function down()
+    {
+        // Eliminar la tabla si se deshace la migración
+        $this->dbforge->drop_table('example_table');
+    }
+}
+```
