@@ -345,11 +345,12 @@ class Migration_add_columns_to_table extends CI_Migration {
 11) Ejemplo de tablas relacionales
 ```sh
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_create_post_table extends CI_Migration {
+class Migration_create_posts_table extends CI_Migration {
 
-    public function up()
-    {
+    public function up() {
+        // Crear la tabla
         $this->dbforge->add_field(array(
             'id' => array(
                 'type' => 'INT',
@@ -383,15 +384,19 @@ class Migration_create_post_table extends CI_Migration {
         // Clave primaria
         $this->dbforge->add_key('id', TRUE);
         
-        // Agregar la clave foránea
-        $this->dbforge->add_field('CONSTRAINT FOREIGN KEY (user_id) REFERENCES users(id)');
-        
-        // Crear la tabla
+        // Crear la tabla sin la clave foránea
         $this->dbforge->create_table('posts');
+        
+        // Agregar la clave foránea con una consulta SQL
+        $this->db->query('ALTER TABLE posts ADD CONSTRAINT FOREIGN KEY (user_id) REFERENCES users(id)');
     }
 
-    public function down()
-    {
+    public function down() {
+        // Código para revertir los cambios (rollback)
+        // Primero eliminamos la clave foránea
+        $this->db->query('ALTER TABLE posts DROP FOREIGN KEY posts_ibfk_1');
+        
+        // Luego eliminamos la tabla
         $this->dbforge->drop_table('posts');
     }
 }
