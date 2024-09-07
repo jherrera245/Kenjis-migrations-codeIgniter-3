@@ -56,8 +56,7 @@ fi
 timestamp=$(date +"%Y%m%d%H%M%S")
 
 # Definir el nombre del archivo basado en el timestamp y el nombre dado
-migration_name=$1
-filename="${timestamp}_${migration_name}.php"
+filename="${timestamp}_$1.php"
 
 # Ruta de la carpeta de migraciones
 migration_path="application/migrations/"
@@ -78,16 +77,12 @@ if [ ! -f "$filepath" ]; then
     exit 1
 fi
 
-# Convertir el nombre de la migración a PascalCase para la clase PHP
-# Reemplazar guiones bajos por espacios, poner en mayúscula la primera letra de cada palabra, y eliminar espacios.
-class_name=$(echo "$migration_name" | sed -r 's/(^|_)([a-z])/\U\2/g')
-
 # Agregar contenido básico al archivo de migración
 cat <<EOL > "$filepath"
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_$class_name extends CI_Migration {
+class Migration_$1 extends CI_Migration {
 
     public function up() {
         // Código para crear la tabla o modificar la base de datos
@@ -112,7 +107,7 @@ Buscar la migración en la caperta migration tendra un nombre similar a este **2
 ```sh
 <?php
 
-class Migration_CreateUsersTable extends CI_Migration {
+class Migration_create_users_table extends CI_Migration {
 
     public function up()
     {
@@ -299,7 +294,7 @@ Ejemplo
 ```sh
 <?php
 
-class Migration_AddColumnsToTable extends CI_Migration {
+class Migration_add_columns_to_table extends CI_Migration {
 
     public function up() {
         // Agregar nuevas columnas a la tabla 'your_table'
@@ -333,7 +328,7 @@ class Migration_AddColumnsToTable extends CI_Migration {
 ```sh
 <?php
 
-class Migration_CreatePostsTable extends CI_Migration {
+class Migration_create_post_table extends CI_Migration {
 
     public function up()
     {
@@ -388,7 +383,7 @@ class Migration_CreatePostsTable extends CI_Migration {
 ```sh
 <?php
 
-class Migration_CreateExampleTable extends CI_Migration {
+class Migration_create_example_table extends CI_Migration {
 
     public function up()
     {
