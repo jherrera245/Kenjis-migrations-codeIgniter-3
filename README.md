@@ -164,7 +164,7 @@ class Migrate extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('migration');
-        $this->load->database(); // Asegurarse de que la base de datos está cargada
+        $this->load->database();
     }
 
     public function index() {
@@ -174,10 +174,14 @@ class Migrate extends CI_Controller {
         switch ($action) {
             case 'latest':
                 // Ejecutar todas las migraciones pendientes
-                if ($this->migration->latest() === FALSE) {
-                    echo $this->migration->error_string();
-                } else {
-                    echo 'Migraciones ejecutadas correctamente.';
+                $migrations = $this->migration->find_migrations(); // Obtén las migraciones pendientes
+                foreach ($migrations as $version => $migration) {
+                    echo "Ejecutando migración: $migration\n";
+                    if ($this->migration->version($version) === FALSE) {
+                        echo $this->migration->error_string();
+                    } else {
+                        echo "Migración ejecutada: $migration\n";
+                    }
                 }
                 break;
 
@@ -209,6 +213,20 @@ class Migrate extends CI_Controller {
                 } else {
                     foreach ($migrations as $migration) {
                         echo "Migración ejecutada: Versión " . $migration->version . " en " . $migration->migration_time . "\n";
+                    }
+                }
+                break;
+
+            case 'list':
+                // Listar los archivos de migración ejecutados
+                $this->db->select('migration');
+                $this->db->from('migrations');
+                $executed_migrations = $this->db->get()->result();
+                if (empty($executed_migrations)) {
+                    echo 'No se encontraron archivos de migración ejecutados.';
+                } else {
+                    foreach ($executed_migrations as $migration) {
+                        echo "Archivo de migración ejecutado: " . $migration->migration . "\n";
                     }
                 }
                 break;
