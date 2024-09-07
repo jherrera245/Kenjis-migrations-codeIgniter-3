@@ -105,18 +105,17 @@ echo "Migración creada: $filepath"
 
 6) Ejemplo: Crear una migración para una tabla users
 ```sh
-./create_migration.sh create_users
+./create_migration.sh create_users_table
 ```
 
 Buscar la migración en la caperta migration tendra un nombre similar a este **20240906223232_Create_users.php**, agregaremos un par de columnas
 ```sh
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_CreateUsers extends CI_Migration {
+class Migration_CreateUsersTable extends CI_Migration {
 
-    public function up() {
-        // Definir la estructura de la tabla users
+    public function up()
+    {
         $this->dbforge->add_field(array(
             'id' => array(
                 'type' => 'INT',
@@ -138,14 +137,23 @@ class Migration_CreateUsers extends CI_Migration {
             ),
             'created_at' => array(
                 'type' => 'DATETIME',
+                'null' => TRUE,
+            ),
+            'updated_at' => array(
+                'type' => 'DATETIME',
+                'null' => TRUE,
             ),
         ));
+        
+        // Primary Key
         $this->dbforge->add_key('id', TRUE);
+        
+        // Crear la tabla
         $this->dbforge->create_table('users');
     }
 
-    public function down() {
-        // Eliminar la tabla users en caso de hacer rollback
+    public function down()
+    {
         $this->dbforge->drop_table('users');
     }
 }
