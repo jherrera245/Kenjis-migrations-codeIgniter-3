@@ -205,7 +205,7 @@ class Migrate extends CI_Controller {
 }
 ```
 
-8) Creación de archivo bash para ejecutar las migraciones desde la consola migrate.sh
+8) Creación de archivo bash para ejecutar las migraciones desde la consola **migrate.sh**
 ```sh
 #!/bin/bash
 
