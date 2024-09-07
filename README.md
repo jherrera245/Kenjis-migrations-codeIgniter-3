@@ -161,6 +161,7 @@ class Migrate extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('migration');
+        $this->load->database(); // Asegurarse de que la base de datos está cargada
     }
 
     public function index() {
@@ -197,6 +198,18 @@ class Migrate extends CI_Controller {
                 }
                 break;
 
+            case 'status':
+                // Mostrar el estado de las migraciones ejecutadas
+                $migrations = $this->db->get('migrations')->result();
+                if (empty($migrations)) {
+                    echo 'No se encontraron migraciones ejecutadas.';
+                } else {
+                    foreach ($migrations as $migration) {
+                        echo "Migración ejecutada: Versión " . $migration->version . " en " . $migration->migration_time . "\n";
+                    }
+                }
+                break;
+
             default:
                 echo 'Comando no reconocido.';
                 break;
@@ -209,9 +222,9 @@ class Migrate extends CI_Controller {
 ```sh
 #!/bin/bash
 
-# Verificar si se pasa el comando (migrate, rollback, reset)
+# Verificar si se pasa el comando (migrate, rollback, reset, status)
 if [ -z "$1" ]; then
-    echo "Error: Debes especificar un comando (migrate, rollback, reset)."
+    echo "Error: Debes especificar un comando (migrate, rollback, reset, status)."
     exit 1
 fi
 
@@ -240,8 +253,13 @@ case "$1" in
         response=$(curl -s -X GET "${BASE_URL}/${CI_INDEX}?migrate=version&version=0")
         echo "$response"
         ;;
+    status)
+        echo "Obteniendo el estado de las migraciones..."
+        response=$(curl -s -X GET "${BASE_URL}/${CI_INDEX}?migrate=status")
+        echo "$response"
+        ;;
     *)
-        echo "Comando no reconocido. Usa 'migrate', 'rollback <version>', o 'reset'."
+        echo "Comando no reconocido. Usa 'migrate', 'rollback <version>', 'reset' o 'status'."
         exit 1
         ;;
 esac
