@@ -103,7 +103,7 @@ echo "Migración creada: $filepath"
 ./create_migration.sh create_users_table
 ```
 
-Buscar la migración en la caperta migration tendra un nombre similar a este **20240906223232_Create_users.php**, agregaremos un par de columnas
+Buscar la migración en la caperta migration tendra un nombre similar a este **20240906223232_create_users_table.php**, agregaremos un par de columnas
 ```sh
 <?php
 
