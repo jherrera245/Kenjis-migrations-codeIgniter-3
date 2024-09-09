@@ -6,7 +6,7 @@ Implementación de un gestor de migraciones usando kenjis en codeligniter 3
 composer require kenjis/codeigniter-cli --dev
 ```
 
-2) Instale el archivo de comando ( cli) y los archivos de configuración ( config/) en su proyecto CodeIgniter:
+2) Instale el archivo de comando (cli) y los archivos de configuración ( config/) en su proyecto CodeIgniter:
 ```sh
 php vendor/kenjis/codeigniter-cli/install.php
 ```
@@ -290,9 +290,9 @@ Para ejecutar todas las migraciones:
 ./migrate.sh migrate
 ```
 
-Para hacer rollback a una versión específica:
+Para hacer rollback a una versión específica: tomamo como ereferencia el archivo de la migracion creado *202409062232389_create_post_table.php* version corresponde al prefijo datetime con el que se nombra el archivo de nuestra migracion **202409062232389** de este modo se pueder hacer el rollback a laversion especifica que queramos
 ```sh
-./migrate.sh rollback 20240905123456
+./migrate.sh rollback 202409062232389
 ```
 
 Para revertir todas las migraciones:
