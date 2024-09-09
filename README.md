@@ -290,7 +290,10 @@ Para ejecutar todas las migraciones:
 ./migrate.sh migrate
 ```
 
-Para hacer rollback a una versión específica: tomamo como ereferencia el archivo de la migracion creado *202409062232389_create_post_table.php* version corresponde al prefijo datetime con el que se nombra el archivo de nuestra migracion **202409062232389** de este modo se pueder hacer el rollback a laversion especifica que queramos
+### Cómo hacer rollback a una versión específica
+Para hacer un rollback a una versión específica, es necesario identificar el archivo de la migración correspondiente. El nombre de cada archivo de migración incluye un prefijo basado en la fecha y hora en que fue creado. Por ejemplo, en el archivo 202409062232389_create_post_table.php, el prefijo 202409062232389 representa el timestamp de la migración.
+
+Para realizar el rollback, debes usar este timestamp como referencia. De esta manera, podrás revertir a una migración específica utilizando el prefijo de la versión deseada.
 ```sh
 ./migrate.sh rollback 202409062232389
 ```
