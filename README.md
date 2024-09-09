@@ -175,13 +175,10 @@ class Migrate extends CI_Controller {
             case 'latest':
                 // Ejecutar todas las migraciones pendientes
                 $migrations = $this->migration->find_migrations(); // Obtén las migraciones pendientes
-                foreach ($migrations as $version => $migration) {
-                    echo "Ejecutando migración: $migration\n";
-                    if ($this->migration->version($version) === FALSE) {
-                        echo $this->migration->error_string();
-                    } else {
-                        echo "Migración ejecutada: $migration\n";
-                    }
+                if ($this->migration->latest() === FALSE) {
+                    echo $this->migration->error_string();
+                } else {
+                    echo 'Migraciones ejecutadas hasta la versión más reciente.';
                 }
                 break;
 
