@@ -103,7 +103,7 @@ echo "Migración creada: $filepath"
 ./create_migration.sh create_users_table
 ```
 
-Buscar la migración en la caperta migration tendra un nombre similar a este **20240906223232_create_users_table.php**, agregaremos un par de columnas
+Esto generará un archivo de migración en la carpeta migrations con un nombre similar a 20240906223232_create_users_table.php, donde el prefijo numérico representa la fecha y hora de creación. A continuación, puedes agregar las columnas necesarias para la tabla users en el archivo generado. Un ejemplo de cómo estructurar la migración sería el siguiente:
 ```sh
 <?php
 
