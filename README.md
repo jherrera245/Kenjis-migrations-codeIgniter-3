@@ -385,13 +385,13 @@ class Migration_create_posts_table extends CI_Migration {
         $this->dbforge->create_table('posts');
         
         // Agregar la clave foránea con una consulta SQL
-        $this->db->query('ALTER TABLE posts ADD CONSTRAINT FOREIGN KEY (user_id) REFERENCES users(id)');
+        $this->db->query('ALTER TABLE posts ADD CONSTRAINT post_fk_user_id  FOREIGN KEY (user_id) REFERENCES users(id)');
     }
 
     public function down() {
         // Código para revertir los cambios (rollback)
         // Primero eliminamos la clave foránea
-        $this->db->query('ALTER TABLE posts DROP FOREIGN KEY posts_ibfk_1');
+        $this->db->query('ALTER TABLE posts DROP FOREIGN KEY post_fk_user_id');
         
         // Luego eliminamos la tabla
         $this->dbforge->drop_table('posts');
