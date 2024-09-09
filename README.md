@@ -212,7 +212,7 @@ class Migrate extends CI_Controller {
                     echo 'No se encontraron migraciones ejecutadas.';
                 } else {
                     foreach ($migrations as $migration) {
-                        echo "Migración ejecutada: Versión " . $migration->version . " en " . $migration->migration_time . "\n";
+                        echo "Migración ejecutada: Versión " . $migration->version . "\n";
                     }
                 }
                 break;
